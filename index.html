@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <!-- Fonts -->
+    
+    <link rel="preConnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Mega City Bus</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        </div>
+
+
+        <div id="booking-submit" class="booking-form">
+            <h3>Explore By Bus</h3>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Dhaka">
+                </div>
+                <div class="input-group">
+                    <label" for="">From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Chittagone">
+                </div>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="inputs">
+                <div class="input-group f-class">
+                <div>
+                    <label for="">First Class $ (<span id="first-total">0</span>)</label>
+                    <input id="first-class"  type="text" name="" value="0">
+                </div>
+                <div>
+                    <button id="first-class-increment" class="btn btn-default"><i class="plus-minus-btn"> + </i></button>
+                    <br>
+                    <button id="first-class-decrement" class="btn btn-default"><i class="plus-minus-btn"> - </i></button>
+                </div>
+            </div>
+                <div class="input-group f-class">
+                    <div>
+                        <label for="">Economy $ (<span id="economy-total">0</span>)</label>
+                        <input id="economy-class" class="inp-style inp-width" type="text" name="" value="0">
+                    </div>
+                    <div>
+                        <button id="economy-class-increment" class="btn btn-default"><i class="plus-minus-btn"> + </i></button>
+                        <br>
+                        <button id="economy-class-decrement" class="btn btn-default"><i class="plus-minus-btn"> - </i></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="subtotal">$</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="vat">$</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="grandTotal">$</p>
+                    </div>
+                </div>
+            </div>
+            <button id="submitbtn" class="btn-style">Book Now</button>
+        </div>
+<!--Booking Button-->
+        <div id="booking-conformation" class="booking-submit">
+            <h3>Your booking is </h3>
+            <h1>Successfully</h1>
+            <img src="images/5ef344a6fcb9c3498e2b332a_Screenshot_11.png" alt="">
+        </div>
+    </main>
+
+    <!--Thank You-->
+
+    <script>
+          function ticketHandler(ticket, increment){
+            var ticketInput = document.getElementById(ticket + '-class');
+            var ticketInputCount = parseInt(ticketInput.value);
+            var ticketNewCount = ticketInputCount;
+            if (increment == true) {
+                ticketNewCount = ticketInputCount + 1;
+            }
+            else if (increment == false && ticketInputCount > 0) {
+                ticketNewCount = ticketInputCount - 1;
+            }
+            ticketInput.value = ticketNewCount;
+            var ticketTotal = 0;
+            if (ticket == 'first') {
+                ticketTotal = ticketNewCount * 150;
+            }
+            else if (ticket == 'economy') {
+                ticketTotal = ticketNewCount * 100
+            }
+            document.getElementById(ticket + '-total')
+            .innerText = ticketTotal;
+            getSubtotal()
+        }
+           
+        
+           document.getElementById('economy-class-increment').addEventListener('click',function(){
+                ticketHandler('economy', true)
+           }) 
+           document.getElementById('economy-class-decrement').addEventListener('click',function(){
+               ticketHandler('economy', false)
+           })
+
+        document.getElementById('first-class-increment').addEventListener('click', function(){
+            ticketHandler('first', true);
+        })
+        document.getElementById('first-class-decrement').addEventListener('click',function(){
+            ticketHandler('first',false);
+        })
+        function getSubtotal(){
+           var firstClassInput = document.getElementById('first-class');
+           var firstClassCount = parseInt(firstClassInput.value);
+
+           var economyClassInput = document.getElementById('economy-class');
+           var economyClassCount = parseInt(economyClassInput.value);
+            
+           const subTotal = firstClassCount * 150 + economyClassCount * 100 ; 
+           document.getElementById('subtotal').innerHTML = '$' + subTotal;
+           var vat = subTotal * 0.1;
+       document.getElementById('vat')
+       .innerText = vat;
+       document.getElementById('grandTotal').innerText = subTotal + vat;
+        }
+
+//Book now Button handler
+        document.getElementById('submitbtn').addEventListener('click', function(){
+            document.getElementById('booking-submit').style.display = 'none';
+            document.getElementById('booking-conformation').style.display = 'block'
+
+        })
+      
+//practice........ 
+
+
+        // function firstClassHandler(increment){
+        //     var firstInput = document.getElementById('input-first-class');
+        //     var firstInputCount = parseInt(firstInput.value);
+        //     var firstNewCount = firstInputCount;
+        //     if (increment == true) {
+        //         firstNewCount = firstInputCount + 1;
+        //     }
+        //     else if (increment == false && firstInputCount > 0) {
+        //         firstNewCount = firstInputCount - 1;
+        //     }
+        //     firstInput.value = firstNewCount;
+        //     var firstNewInput = firstNewCount * 150;
+        //     document.getElementById('first-price')
+        //     .innerText = firstNewInput;
+            
+        // }
+        // document.getElementById('first-class-increment').addEventListener('click',function(){
+        //     var firstInput = document.getElementById('input-first-class');
+        //     var firstInputCount = parseInt(firstInput.value);
+        //     var firstCount = firstInputCount + 1;
+        //     firstInput.value = firstCount;
+        //     var firstNewInput = firstCount * 150;
+        //     document.getElementById('first-price')
+        //     .innerText = firstNewInput;
+        // })
+        // document.getElementById('first-class-decrement').addEventListener('click',function(){
+        //     var firstInput = document.getElementById('input-first-class');
+        //     var firstInputCount = parseInt(firstInput.value);
+        //     var firstCount = firstInputCount - 1;
+        //     firstInput.value = firstCount;
+        //     var firstNewInput = firstCount * 150;
+        //     document.getElementById('first-price')
+        //     .innerText = firstNewInput;
+        // })
+    </script>
+
+
+</body>
+
+</html>
